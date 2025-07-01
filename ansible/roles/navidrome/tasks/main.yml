@@ -1,0 +1,19 @@
+---
+- name: install file
+  ansible.builtin.apt:
+    deb: "https://github.com/navidrome/navidrome/releases/download/v{{ navidrome_version }}/navidrome_{{ navidrome_version }}_linux_arm64.deb"
+
+- name: configure navidrome
+  ansible.builtin.template:
+    src: navidrome.toml
+    dest: /etc/navidrome/navidrome.toml
+    owner: navidrome
+    group: root
+    mode: '0644'
+  notify: restart navidrome
+
+- name: start navidrome service
+  ansible.builtin.systemd_service:
+    name: navidrome
+    enabled: true
+    state: started

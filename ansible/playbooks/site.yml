@@ -1,0 +1,25 @@
+---
+- name: setup music
+  hosts: orangepi5-plus
+  vars:
+    container_name: moose
+    container_config:
+      security.nesting: "true"
+      security.privileged: "false"
+    container_devices:
+      music:
+        path: /music
+        source: /home/meepi/music
+        type: disk
+      navidrome-data:
+        path: /var/lib/navidrome
+        source: /srv/navidrome
+        type: disk
+    container_groups: [music_containers]
+  roles:
+    - containers
+
+- name: start navidrome
+  hosts: music_containers
+  roles:
+    - navidrome
