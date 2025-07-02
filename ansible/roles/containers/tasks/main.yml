@@ -1,12 +1,12 @@
 ---
 - name: check if container exists
-  command: incus list {{ container_name }} --format csv
+  ansible.builtin.command: incus list {{ container_name }} --format csv
   register: container_check
   failed_when: false
   changed_when: false
 
 - name: create container
-  command: >
+  ansible.builtin.command: >
     incus launch images:{{ container_image | default('ubuntu/22.04/arm64') }}
     {{ container_name }}
     {% for key, value in container_config.items() %}
@@ -16,20 +16,29 @@
   register: container_created
 
 - name: wait for container to start
-  command: incus exec {{ container_name }} -- systemctl is-system-running --wait
+  ansible.builtin.command: incus exec {{ container_name }} -- systemctl is-system-running --wait
   when: container_created is changed
   retries: 30
   delay: 2
 
+- name: check existing container devices
+  ansible.builtin.command: incus config show {{ container_name }}
+  register: container_config_output
+  changed_when: false
+
+- name: extract existing devices
+  set_fact:
+    existing_devices: "{{ (container_config_output.stdout | from_yaml).devices.keys() | list }}"
+
 - name: add mounts to container
-  command: >
+  ansible.builtin.command: >
     incus config device add {{ container_name }} {{ item.key }}
-    disk source={{ item.value.source }} path={{ item.value.path }}
+    disk source={{ item.value.source }} path={{ item.value.path }} shift=true
   loop: "{{ container_devices | dict2items }}"
   when:
     - container_devices is defined
     - item.value.type == 'disk'
-  failed_when: false
+    - item.key not in existing_devices
 
 - name: add container to inventory
   ansible.builtin.add_host:

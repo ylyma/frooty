@@ -1,8 +1,0 @@
----
-navidrome_config:
-  LogLevel: "debug"
-  MusicFolder: "/home/meepi/music"
-  ScanSchedule: "@every 30s"
-  TranscodingCacheSize: "150MiB"
-  UIWelcomeMessage: "mooooooose 🎵"
-  EnableTranscodingConfig: true

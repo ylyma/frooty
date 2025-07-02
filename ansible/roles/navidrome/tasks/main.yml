@@ -1,19 +1,98 @@
 ---
-- name: install file
-  ansible.builtin.apt:
-    deb: "https://github.com/navidrome/navidrome/releases/download/v{{ navidrome_version }}/navidrome_{{ navidrome_version }}_linux_arm64.deb"
+- name: update package cache
+  apt:
+    update_cache: true
 
-- name: configure navidrome
-  ansible.builtin.template:
-    src: navidrome.toml
+- name: install dependencies
+  apt:
+    name:
+      - vim
+      - ffmpeg
+      - wget
+    state: present
+
+- name: create navidrome directories
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: '0755'
+  loop:
+    - {path: "/opt/navidrome", owner: "{{ navidrome_user }}", group: "{{ navidrome_user }}"}
+    - {path: "{{ navidrome_data_dir }}", owner: "{{ navidrome_user }}", group: "{{ navidrome_user }}"}
+    - {path: "/etc/navidrome", owner: "root", group: "root"}
+
+- name: install navidrome
+  get_url:
+    url: "https://github.com/navidrome/navidrome/releases/download/v{{ navidrome_version }}/navidrome_{{ navidrome_version }}_linux_arm64.tar.gz"
+    dest: /tmp/navidrome.tar.gz
+    mode: '0644'
+
+- name: extract navidrome
+  unarchive:
+    src: /tmp/navidrome.tar.gz
+    dest: /opt/navidrome/
+    remote_src: true
+    owner: "{{ navidrome_user }}"
+    group: "{{ navidrome_user }}"
+    creates: /opt/navidrome/navidrome
+
+- name: set navidrome executable permissions
+  file:
+    path: /opt/navidrome/navidrome
+    mode: '0755'
+
+- name: fix navidrome directory permissions
+  file:
+    path: "{{ navidrome_data_dir }}"
+    state: directory
+    owner: "{{ navidrome_user }}"
+    group: "{{ navidrome_user }}"
+    mode: '0755'
+    recurse: true
+
+- name: create navidrome configuration
+  template:
+    src: navidrome.toml.j2
     dest: /etc/navidrome/navidrome.toml
-    owner: navidrome
+    owner: root
     group: root
     mode: '0644'
   notify: restart navidrome
+
+- name: check for existing navidrome service
+  stat:
+    path: /etc/systemd/system/navidrome.service
+  register: existing_service
+
+- name: disable navidrome
+  systemd:
+    name: navidrome
+    state: stopped
+    enabled: false
+  when: existing_service.stat.exists
+
+- name: remove service file
+  file:
+    path: /etc/systemd/system/navidrome.service
+    state: absent
+  when: existing_service.stat.exists
+  register: service_removed
+
+- name: create navidrome service
+  template:
+    src: navidrome.service.j2
+    dest: /etc/systemd/system/navidrome.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - restart navidrome
 
 - name: start navidrome service
   ansible.builtin.systemd_service:
     name: navidrome
     enabled: true
     state: started
+    daemon_reload: true

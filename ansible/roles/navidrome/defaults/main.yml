@@ -1,2 +1,16 @@
 ---
-navidrome_version: "0.56.1"
+navidrome_version: "0.57.0"
+navidrome_user: "navidrome"
+navidrome_data_dir: "/var/lib/navidrome"
+navidrome_music_dir: "/music"
+navidrome_port: 4533
+
+navidrome_config:
+  LogLevel: "debug"
+  ScanSchedule: "@every 1m"
+  SessionTimeout: "24h"
+  UIWelcomeMessage: "moooooose!"
+  DefaultTheme: "Dark"
+  CacheFolder: "/var/lib/navidrome/cache"
+  MusicFolder: "/music"
+  TranscodingCacheSize: "150MiB"
