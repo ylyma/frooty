@@ -73,7 +73,7 @@
     enabled: false
   when: existing_service.stat.exists
 
-- name: remove service file
+- name: remove navidrome service
   file:
     path: /etc/systemd/system/navidrome.service
     state: absent

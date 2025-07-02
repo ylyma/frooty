@@ -1,0 +1,8 @@
+---
+- name: setup node_exporter
+  hosts: orangepi5-plus
+  roles: 
+    - role: node_exporter
+      tags: node_exporter
+      
+
