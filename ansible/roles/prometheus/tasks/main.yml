@@ -1,0 +1,60 @@
+---
+- name: create pometheus user
+  user:
+    name: "{{ prometheus_user }}"
+    system: true
+    shell: /bin/false
+    home: "{{ prometheus_data_dir }}"
+    create_home: false
+  become: true
+
+- name: create prometheus directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    mode: '0755'
+    loop:
+      - "{{ prometheus_data_dir }}"
+      - "{{ prometheus_config_dir }}"
+      - "{{ prometheus_log_dir }}"
+      - "{{ prometheus_config_dir }}/rules"
+      - "{{ prometheus_config_dir }}/file_sd"
+
+- name: download prometheus
+  get_url:
+    url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-arm64.tar.gz"
+    dest: /tmp/prometheus.tar.gz
+    mode: '0644'
+
+- name: extract prometheus
+  unarchive:
+    src: /tmp/prometheus.tar.gz
+    dest: /tmp/
+    remote_src: true
+    creates: /tmp/prometheus-{{ prometheus_version }}.linux-arm64/prometheus
+
+- name: copy prometheus binaries
+  copy:
+    src: "/tmp/prometheus-{{ prometheus_version }}.linux-arm64/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    owner: root
+    group: root
+    mode: '0755'
+    remote_src: true
+  loop:
+    - prometheus
+    - promtool
+
+- name: copy prometheus console files
+  copy:
+    src: "/tmp/prometheus-{{ prometheus_version }}.linux-arm64/{{ item }}/"
+    dest: "{{ prometheus_config_dir }}/{{ item }}/"
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    mode: '0644'
+    remote_src: true
+  loop:
+    - consoles
+    - console_libraries

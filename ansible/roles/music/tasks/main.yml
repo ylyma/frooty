@@ -1,57 +1,67 @@
 ---
 - name: update package cache
-  apt:
+  ansible.builtin.apt:
     update_cache: true
-
 - name: install dependencies
-  apt:
+  ansible.builtin.apt:
     name:
       - vim
       - ffmpeg
       - wget
     state: present
-
+- name: create navidrome group
+  ansible.builtin.group:
+    name: '{{ navidrome_group }}'
+    system: true
+  become: true
+- name: create navidrome user
+  ansible.builtin.user:
+    name: '{{ navidrome_user }}'
+    system: true
+    shell: /bin/bash
+    home: '{{ navidrome_data_dir }}'
+    group: '{{ navidrome_group }}'
+  become: true
 - name: create navidrome directories
+  become: true
   file:
-    path: "{{ item.path }}"
+    path: '{{ item.path }}'
     state: directory
-    owner: "{{ item.owner }}"
-    group: "{{ item.group }}"
+    owner: '{{ item.owner }}'
+    group: '{{ item.group }}'
     mode: '0755'
   loop:
-    - {path: "/opt/navidrome", owner: "{{ navidrome_user }}", group: "{{ navidrome_user }}"}
-    - {path: "{{ navidrome_data_dir }}", owner: "{{ navidrome_user }}", group: "{{ navidrome_user }}"}
-    - {path: "/etc/navidrome", owner: "root", group: "root"}
-
+    - {path: '{{ navidrome_bin_dir }}', owner: '{{ navidrome_user }}', group: '{{ navidrome_group }}'}
+    - {path: '{{ navidrome_data_dir }}', owner: '{{ navidrome_user }}', group: '{{ navidrome_group }}'}
+    - {path: '{{ navidrome_config_dir }}', owner: root, group: root}
 - name: install navidrome
   get_url:
-    url: "https://github.com/navidrome/navidrome/releases/download/v{{ navidrome_version }}/navidrome_{{ navidrome_version }}_linux_arm64.tar.gz"
+    url: https://github.com/navidrome/navidrome/releases/download/v{{ navidrome_version }}/navidrome_{{ navidrome_version
+      }}_linux_arm64.tar.gz
     dest: /tmp/navidrome.tar.gz
     mode: '0644'
-
 - name: extract navidrome
   unarchive:
     src: /tmp/navidrome.tar.gz
     dest: /opt/navidrome/
     remote_src: true
-    owner: "{{ navidrome_user }}"
-    group: "{{ navidrome_user }}"
+    owner: '{{ navidrome_user }}'
+    group: '{{ navidrome_user }}'
     creates: /opt/navidrome/navidrome
-
 - name: set navidrome executable permissions
+  become: true
   file:
     path: /opt/navidrome/navidrome
     mode: '0755'
-
 - name: fix navidrome directory permissions
+  become: true
   file:
-    path: "{{ navidrome_data_dir }}"
+    path: '{{ navidrome_data_dir }}'
     state: directory
-    owner: "{{ navidrome_user }}"
-    group: "{{ navidrome_user }}"
+    owner: '{{ navidrome_user }}'
+    group: '{{ navidrome_user }}'
     mode: '0755'
     recurse: true
-
 - name: create navidrome configuration
   template:
     src: navidrome.toml.j2
@@ -60,26 +70,22 @@
     group: root
     mode: '0644'
   notify: restart navidrome
-
 - name: check for existing navidrome service
   stat:
     path: /etc/systemd/system/navidrome.service
   register: existing_service
-
 - name: disable navidrome
   systemd:
     name: navidrome
     state: stopped
     enabled: false
   when: existing_service.stat.exists
-
 - name: remove navidrome service
   file:
     path: /etc/systemd/system/navidrome.service
     state: absent
   when: existing_service.stat.exists
   register: service_removed
-
 - name: create navidrome service
   template:
     src: navidrome.service.j2
@@ -89,7 +95,6 @@
     mode: '0644'
   notify:
     - restart navidrome
-
 - name: start navidrome service
   ansible.builtin.systemd_service:
     name: navidrome

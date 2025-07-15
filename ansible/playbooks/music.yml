@@ -4,8 +4,8 @@
   vars:
     container_name: moose
     container_config:
-      security.nesting: "true"
-      security.privileged: "false"
+      limits.cpu.allowance: "20%"
+      limits.cpu.priority: "8"
     container_devices:
       music:
         path: /music
@@ -19,8 +19,8 @@
   roles:
     - containers
 
-- name: install navidrome
+- name: setup navidrome
   hosts: music_containers
   roles:
-    - role: navidrome
-      tags: navidrome
+    - role: music
+      tags: music

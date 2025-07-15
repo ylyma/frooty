@@ -1,0 +1,3 @@
+---
+- name: setup benchmarks containerr
+  hosts: orangepi5-plus

@@ -1,26 +1,29 @@
 ---
+- name: create node_exporter group
+  group:
+    name: '{{ node_exporter_group }}'
+    system: true
+  become: true
 - name: create node-exporter user
   user:
-    name: "{{ node_exporter_user }}"
+    name: '{{ node_exporter_user }}'
     system: true
-    shell: /bin/false
-    home: /
-    create_home: false
+    shell: /bin/bash
+    home: '{{ node_exporter_data_dir }}'
+    group: '{{ node_exporter_group }}'
   become: true
-
 - name: install node_exporter
-  get_url: 
-    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-arm64.tar.gz"
+  get_url:
+    url: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version
+      }}.linux-arm64.tar.gz
     dest: /tmp/node_exporter.tar.gz
     mode: '0644'
-
 - name: extract node_exporter
   unarchive:
     src: /tmp/node_exporter.tar.gz
     dest: /tmp/
     remote_src: true
     creates: /tmp/node_exporter-{{ node_exporter_version }}.linux-arm64/node_exporter
-
 - name: copy node_exporter binary
   ansible.builtin.copy:
     src: /tmp/node_exporter-{{ node_exporter_version }}.linux-arm64/node_exporter
@@ -29,7 +32,6 @@
     group: root
     mode: '0755'
   become: true
-
 - name: create node_exporter service
   template:
     src: node_exporter.service.j2
@@ -38,9 +40,8 @@
     group: root
     mode: '0644'
   become: true
-  notify: 
+  notify:
     - restart node_exporter
-
 - name: start node_exporter service
   ansible.builtin.systemd_service:
     name: node_exporter
@@ -48,10 +49,9 @@
     state: started
     daemon_reload: true
   become: true
-
 - name: cleanup downloaded files
   file:
-    path: "{{ item }}"
+    path: '{{ item }}'
     state: absent
   loop:
     - /tmp/node_exporter.tar.gz
