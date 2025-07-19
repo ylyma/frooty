@@ -1,0 +1,115 @@
+id | title                             | authors           | series            | 
+2   | Held                                | Anne Michaels       | None
+3   | A Leopard-Skin Hat                  | Anne Serre          | None
+4   | Heart Lamp                          | Banu Mushtaq        | None
+5   | Small Things Like These             | Claire Keegan       | None
+6   | Time of the Flies                   | Claudia Piñeiro     | None
+7   | Tyll                                | Daniel Kehlmann     | None
+8   | Under the Eye of the Big Bird       | Hiromi Kawakami     | None
+9   | Difficult Loves                     | Italo Calvino       | None
+10  | I Who Have Never Known Men          | Jacqueline Harpman  | None
+11  | Prophet Song                        | Paul Lynch          | None
+12  | The Bee Sting                       | Paul Murray         | None
+13  | Notes of a Crocodile                | Qiu Miaojin         | None
+14  | Sula                                | Toni Morrison       | None
+15  | Wandering Stars                     | Tommy Orange        | None
+16  | Black Swans                         | Eve Babitz          | None
+17  | Eve's Hollywood                     | Eve Babitz          | None
+18  | Slow Days, Fast Company             | Eve Babitz          | None
+19  | Hamnet                              | Maggie O'Farrell    | None
+20  | The Year Of The Flood               | Margaret Atwood     | MaddAddam
+21  | MaddAddam                           | Margaret Atwood     | MaddAddam
+22  | Oryx And Crake                      | Margaret Atwood     | None
+23  | The Fifth Season                    | N. K. Jemisin       | The Broken Earth
+24  | The Obelisk Gate                    | N. K. Jemisin       | The Broken Earth
+25  | The Stone Sky                       | N. K. Jemisin       | The Broken Earth
+26  | Night Sky with Exit Wounds          | Ocean Vuong         | None
+27  | On Earth We're Briefly Gorgeous: A  | Ocean Vuong         | None
+    | Novel                               |                     | 
+28  | Time Is a Mother                    | Ocean Vuong         | None
+29  | Drive Your Plow Over the Bones of   | Olga Tokarczuk      | None
+    | the Dead                            |                     | 
+30  | Babel                               | R. F. Kuang         | None
+31  | The Dragon Republic                 | R. F. Kuang         | The Poppy War
+32  | The Burning God                     | R. F. Kuang         | The Poppy War
+33  | The Poppy War                       | R. F. Kuang         | The Poppy War
+34  | MaddAddam 03 - MaddAddam            | Margaret Atwood     | MaddAddam
+35  | When We Cease to Understand the     | Benjamín Labatut    | None
+    | World                               |                     | 
+36  | The Dangers of Smoking in Bed:      | Mariana Enriquez    | None
+    | Stories                             |                     | 
+37  | The Emperor of Gladness             | Ocean Vuong         | None
+38  | How to Write an Autobiographical    | Alexander Chee      | None
+    | Novel                               |                     | 
+39  | The Queen of the Night              | Alexander Chee      | None
+40  | Together and by Ourselves           | Alex Dimitrov       | None
+41  | Toward Eternity                     | Anton Hur           | None
+42  | Homeland Elegies                    | Ayad Akhtar         | None
+43  | Dark Matter                         | Blake Crouch        | None
+44  | Elena Knows                         | Claudia Piñeiro     | None
+45  | Cloud Atlas                         | David Mitchell      | None
+46  | Slade House                         | David Mitchell      | None
+47  | The Bone Clocks                     | David Mitchell      | None
+48  | Mortal Republic                     | Edward J. Watts     | None
+49  | The Sixth Extinction: An Unnatural  | Elizabeth Kolbert   | None
+    | History                             |                     | 
+50  | Tell Me Everything: A Novel         | Elizabeth Strout    | None
+51  | Y/N                                 | Esther Yi           | None
+52  | Tenth of December: Stories          | George Saunders     | None
+53  | Human Acts                          | Han Kang            | None
+54  | The White Book                      | Han Kang            | None
+55  | Burial Rites                        | Hannah Kent         | None
+56  | A Little Life                       | Hanya Yanagihara    | None
+57  | After Dark                          | Haruki Murakami     | None
+58  | A Wild Sheep Chase                  | Haruki Murakami     | None
+59  | Sputnik Sweetheart                  | Haruki Murakami     | None
+60  | Dancing in Odessa                   | Ilya Kaminsky       | None
+61  | Deaf Republic                       | Ilya Kaminsky       | None
+62  | Delicious Foods: A Novel            | James Hannaham      | None
+63  | The Virgin Suicides                 | Jeffrey Eugenides   | None
+64  | A Visit From the Goon Squad         | Jennifer Egan       | None
+65  | Play It As It Lays                  | Joan Didion         | None
+66  | Slouching Towards Bethlehem         | Joan Didion         | None
+67  | Counternarratives                   | John Keene          | None
+68  | A Pale View of Hills                | Kazuo Ishiguro      | None
+69  | The Buried Giant                    | Kazuo Ishiguro      | None
+70  | The Remains of the Day              | Kazuo Ishiguro      | None
+71  | When We Were Orphans                | Kazuo Ishiguro      | None
+72  | The Grace of Kings                  | Ken Liu             | The Dandelion
+    |                                     |                     | Dynasty
+73  | The Wall of Storms                  | Ken Liu             | The Dandelion
+    |                                     |                     | Dynasty
+74  | The Paper Menagerie and Other       | Ken Liu             | None
+    | Stories                             |                     | 
+75  | A Manual for Cleaning Women:        | Lucia Berlin        | None
+    | Selected Stories                    |                     | 
+76  | Circe                               | Madeline Miller     | None
+77  | Galatea                             | Madeline Miller     | None
+78  | The Song of Achilles                | Miller, Madeline    | None
+79  | A Brief History of Seven Killings   | James, Marlon       | None
+80  | Black Leopard, Red Wolf             | Marlon James        | None
+81  | The Book of Night Women             | Marlon James        | None
+82  | Lakewood                            | Megan Giddings      | None
+83  | Pachinko                            | Min Jin Lee         | None
+84  | The Fortune Men                     | Nadifa Mohamed      | None
+85  | Patriot Number One: American Dreams | Lauren Hilgers      | None
+    | in Chinatown                        |                     | 
+86  | The Narrow Road to the Deep North   | Richard Flanagan    | None
+87  | Bewilderment                        | Richard Powers      | None
+88  | The Overstory                       | Richard Powers      | None
+89  | Beautiful World, Where Are You      | Sally Rooney        | None
+90  | Conversations with Friends          | Sally Rooney        | None
+91  | Intermezzo                          | Sally Rooney        | None
+92  | Normal People                       | Sally Rooney        | None
+93  | Melmoth                             | Sarah Perry         | None
+94  | Open, Heaven                        | Seán Hewitt         | None
+95  | White Teeth                         | Zadie Smith         | None
+96  | Daisy Jones & The Six               | Taylor Jenkins Reid | None
+97  | Malibu Rising                       | Taylor Jenkins Reid | None
+98  | Seven Husbands of Evelyn Hugo       | Taylor Jenkins Reid | None
+99  | Exhalation                          | Ted Chiang          | None
+100 | Stories of Your Life and Others     | Ted Chiang          | None
+101 | Rejection                           | Tony Tulathimutte   | None
+102 | Grand Union                         | Zadie Smith         | None
+103 | The Fraud                           | Zadie Smith         | None
+104 | Mr Salary                           | Sally Rooney        | None

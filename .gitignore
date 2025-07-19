@@ -1,2 +1,8 @@
-calibre-web/books/
-calibre-web/config/
+calibre-web/*
+
+!calibre-web/docker-compose.yml
+!calibre-web/import.sh
+!calibre-web/list.sh
+!calibre-web/book_list.txt
+
+
