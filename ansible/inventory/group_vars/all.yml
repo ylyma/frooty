@@ -2,4 +2,4 @@
 cluster_name: frooty
 domain: local
 
-navidrome_host_data_path: "/servers/navidrome"
+ansible_user: meepi

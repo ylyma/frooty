@@ -1,0 +1,31 @@
+---
+- name: update package cache
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+- name: check if docker is installed
+  ansible.builtin.command: which docker
+  register: docker_exists
+  failed_when: false
+  changed_when: false
+- name: install docker
+  ansible.builtin.apt:
+    name:
+      - docker.io
+      - docker-compose-plugin
+  become: true
+  when: not docker_exists
+- name: start docker service
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: true
+  become: true
+- name: add user to docker group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: incus
+    append: true
+  become: true
+  notify: refresh connection
+  when: not docker_exists

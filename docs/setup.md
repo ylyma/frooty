@@ -8,6 +8,8 @@ incus is a fork of lxd
 for ansible to find the command lxc:
 `ln -s /usr/bin/incus /usr/local/bin/lxc`
 
+- [ ] TODO: automate setting this up too?
+
 ## music server
 - currently mounts `~/music` to `/music`
     - [ ] TODO: use usb stick for storage instead
@@ -15,6 +17,5 @@ for ansible to find the command lxc:
     - [ ] TODO: automate this
 
 ## monitoring
-- [ ] TODO: find a way to set permission without so many `become: true`s
 
 

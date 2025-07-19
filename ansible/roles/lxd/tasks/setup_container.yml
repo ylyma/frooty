@@ -4,7 +4,6 @@
   register: container_check
   failed_when: false
   changed_when: false
-
 - name: create container
   ansible.builtin.command: >
     incus launch images:{{ container_image | default('ubuntu/22.04/arm64') }}
@@ -14,22 +13,18 @@
     {% endfor %}
   when: container_name not in container_check.stdout
   register: container_created
-
 - name: wait for container to start
   ansible.builtin.command: incus exec {{ container_name }} -- systemctl is-system-running --wait
   when: container_created is changed
   retries: 30
   delay: 2
-
 - name: check existing container devices
   ansible.builtin.command: incus config show {{ container_name }}
   register: container_config_output
   changed_when: false
-
 - name: extract existing devices
   set_fact:
     existing_devices: "{{ (container_config_output.stdout | from_yaml).devices.keys() | list }}"
-
 - name: add mounts to container
   ansible.builtin.command: >
     incus config device add {{ container_name }} {{ item.key }}
@@ -39,7 +34,6 @@
     - container_devices is defined
     - item.value.type == 'disk'
     - item.key not in existing_devices
-
 - name: add container to inventory
   ansible.builtin.add_host:
     name: "{{ container_name }}"

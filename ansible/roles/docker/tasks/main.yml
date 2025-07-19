@@ -1,0 +1,7 @@
+---
+- name: install docker
+  include_tasks: install.yml
+  when: install_docker
+- name: setup containers
+  include_tasks: setup_container.yml
+  when: container_name

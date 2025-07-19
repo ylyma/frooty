@@ -1,0 +1,7 @@
+---
+- name: install incus
+  include_tasks: install.yml
+  when: install_incus
+- name: setup containers
+  include_tasks: setup_container.yml
+  when: container_name

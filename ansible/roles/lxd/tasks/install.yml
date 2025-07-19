@@ -1,0 +1,29 @@
+---
+- name: update package cache
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+- name: check if incus is installed
+  ansible.builtin.command: which incus
+  register: incus_exists
+  failed_when: false
+  changed_when: false
+- name: install incus
+  ansible.builtin.apt:
+    name:
+      - incus
+      - incus-tools
+  become: true
+  when: not incus_exists
+- name: add user to incus group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: incus
+    append: true
+  become: true
+  notify: refresh connection
+  when: not incus_exists
+- name: initialize incus
+  ansible.builtin.command: incus admin init --auto
+  become: true
+  when: not incus_exists
